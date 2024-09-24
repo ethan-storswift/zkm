@@ -291,10 +291,10 @@ fn prove_single_seg() {
     create_task(&mut ctx, 17, 22, 4, 0, 2, 4);
 
     let mut timing = TimingTree::new("prove", log::Level::Info);
-    let allproof: proof::AllProof<GoldilocksField, C, D> =
-        prove(&allstark, &kernel, &config, &mut timing).unwrap();
     // let allproof: proof::AllProof<GoldilocksField, C, D> =
-    //     prove_gpu(&allstark, &kernel, &config, &mut timing, &mut ctx).unwrap();
+    //     prove(&allstark, &kernel, &config, &mut timing).unwrap();
+    let allproof: proof::AllProof<GoldilocksField, C, D> =
+        prove_gpu(&allstark, &kernel, &config, &mut timing, &mut ctx).unwrap();
 
 
     let mut count_bytes = 0;
