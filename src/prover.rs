@@ -12,7 +12,7 @@ use plonky2::field::zero_poly_coset::ZeroPolyOnCoset;
 #[cfg(feature = "gpu")]
 use plonky2::fri::oracle::CudaInvContext;
 
-use plonky2::fri::oracle::PolynomialBatch;
+use plonky2::fri::oracle:: PolynomialBatch;
 use plonky2::hash::hash_types::RichField;
 use plonky2::iop::challenger::Challenger;
 use plonky2::plonk::config::GenericConfig;
@@ -133,7 +133,7 @@ where
     let rate_bits = config.fri_config.rate_bits;
     let cap_height = config.fri_config.cap_height;
 
-    println!("rate_bits: {}, cap_height: {}", rate_bits, cap_height);
+    // println!("rate_bits: {}, cap_height: {}", rate_bits, cap_height);
     let trace_commitments = timed!(
         timing,
         "compute all trace commitments",
@@ -145,11 +145,11 @@ where
                     timing,
                     &format!("compute trace commitment for {:?}", table),
                     {
-                        println!(
-                            "trace len: {}, values len: {}",
-                            trace.len(),
-                            trace[0].values.len()
-                        );
+                        // println!(
+                        //     "trace len: {}, values len: {}",
+                        //     trace.len(),
+                        //     trace[0].values.len()
+                        // );
                         let ret = {
                             // let trace_flatten = &trace
                             //     .par_iter()
@@ -674,11 +674,11 @@ where
     };
     assert!(!auxiliary_polys.is_empty(), "No CTL?");
 
-    println!(
-        "aux len: {}, values len: {}",
-        auxiliary_polys.len(),
-        auxiliary_polys[0].values.len()
-    );
+    // println!(
+    //     "aux len: {}, values len: {}",
+    //     auxiliary_polys.len(),
+    //     auxiliary_polys[0].values.len()
+    // );
 
     let auxiliary_polys_commitment = timed!(
         timing,
@@ -746,11 +746,11 @@ where
             .collect()
     );
 
-    println!(
-        "quotient len: {}, values len: {}",
-        all_quotient_chunks.len(),
-        all_quotient_chunks[0].coeffs.len()
-    );
+    // println!(
+    //     "quotient len: {}, values len: {}",
+    //     all_quotient_chunks.len(),
+    //     all_quotient_chunks[0].coeffs.len()
+    // );
     let quotient_commitment = timed!(
         timing,
         "compute quotient commitment",
@@ -899,12 +899,12 @@ where
     );
     assert!(!auxiliary_polys.is_empty(), "No CTL?");
 
-    println!(
-        "aux, table: {:?} len: {}, values len: {}",
-        table,
-        auxiliary_polys.len(),
-        auxiliary_polys[0].values.len()
-    );
+    // println!(
+    //     "aux, table: {:?} len: {}, values len: {}",
+    //     table,
+    //     auxiliary_polys.len(),
+    //     auxiliary_polys[0].values.len()
+    // );
 
     let auxiliary_polys_commitment = timed!(timing, "compute auxiliary polynomials commitment", {
         let poly = if auxiliary_polys.len() > 4
@@ -1007,12 +1007,12 @@ where
             .collect()
     );
 
-    println!(
-        "quotient, table: {:?}, len: {}, values len: {}",
-        table,
-        all_quotient_chunks.len(),
-        all_quotient_chunks[0].len()
-    );
+    // println!(
+    //     "quotient, table: {:?}, len: {}, values len: {}",
+    //     table,
+    //     all_quotient_chunks.len(),
+    //     all_quotient_chunks[0].len()
+    // );
     let quotient_commitment = timed!(timing, "compute quotient commitment", {
         // if all_quotient_chunks[0].len() == 1048576
         if true
