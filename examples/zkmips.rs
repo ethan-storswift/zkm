@@ -291,10 +291,16 @@ fn prove_single_seg() {
     create_task(&mut ctx, 17, 22, 4, 0, 2, 4);
 
     let mut timing = TimingTree::new("prove", log::Level::Info);
-    // let allproof: proof::AllProof<GoldilocksField, C, D> =
+
+    let use_gpu_prove = env::var("USE_GPU_PROVE").unwrap_or("0".to_string()) == "1";
+    let allproof: proof::AllProof<GoldilocksField, C, D> = if use_gpu_prove {
+        prove_gpu(&allstark, &kernel, &config, &mut timing, &mut ctx).unwrap()
+    } else {
+        prove(&allstark, &kernel, &config, &mut timing).unwrap()
+    };
     //     prove(&allstark, &kernel, &config, &mut timing).unwrap();
-    let allproof: proof::AllProof<GoldilocksField, C, D> =
-        prove_gpu(&allstark, &kernel, &config, &mut timing, &mut ctx).unwrap();
+    // let allproof: proof::AllProof<GoldilocksField, C, D> =
+    //     prove_gpu(&allstark, &kernel, &config, &mut timing, &mut ctx).unwrap();
 
 
     let mut count_bytes = 0;
@@ -316,7 +322,10 @@ fn prove_groth16() {
 }
 
 fn main() {
-    env_logger::try_init().unwrap_or_default();
+    let mut builder = env_logger::Builder::from_default_env();
+    builder.format_timestamp(None);
+    builder.filter_level(LevelFilter::Debug);
+    builder.try_init().unwrap_or_default();
     let args: Vec<String> = env::args().collect();
     let helper = || {
         log::info!(
