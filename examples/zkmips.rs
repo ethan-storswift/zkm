@@ -23,6 +23,7 @@ use plonky2x::frontend::builder::CircuitBuilder as WrapperBuilder;
 use plonky2x::prelude::DefaultParameters;
 use std::sync::Arc;
 use plonky2::field::extension::Extendable;
+#[cfg(feature = "cuda")]
 use plonky2::fri::oracle::create_task;
 use zkm::all_stark::AllStark;
 use zkm::config::StarkConfig;
